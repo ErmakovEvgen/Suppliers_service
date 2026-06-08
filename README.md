@@ -1,4 +1,3 @@
-# ИИ-помощник для поиска поставщиков
 
 AI-сервис для поиска, оценки и выбора поставщиков по заданной категории товаров.
 Проект разработан в рамках тестового задания.
@@ -18,6 +17,16 @@ AI-сервис для поиска, оценки и выбора поставщ
 - принять решение в выборе быстрее.
 
 ---
+## Интерфейс
+### Карточки поставщиков
+<img width="1684" height="859" alt="image" src="https://github.com/user-attachments/assets/f8b82b04-1425-47bb-9209-d0a45d9674c8" />
+
+### Табличный режим
+<img width="1784" height="649" alt="image" src="https://github.com/user-attachments/assets/2b72d9e3-a06c-4272-b743-04f5cb758cdf" />
+
+### AI-рекомендация
+<img width="1773" height="861" alt="image" src="https://github.com/user-attachments/assets/c9c4187d-dd3b-4bbc-a12c-db2239973a4f" />
+
 
 ## Установка и запуск проекта
 
