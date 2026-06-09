@@ -1,14 +1,16 @@
 import os
 import requests
 from dotenv import load_dotenv
+from config.settings import (OPENAI_API_KEY, OPENAI_BASE_URL)
 
 load_dotenv()
 
 class LLMService:
     def __init__(self):
 
-        self.api_key = os.getenv("OPENAI_API_KEY")
-        self.url = "https://api.proxyapi.ru/openai/v1/chat/completions"
+        self.api_key = OPENAI_API_KEY
+        self.url = OPENAI_BASE_URL
+
 
     def generate_recommendation(self, suppliers, category):
 
@@ -79,17 +81,33 @@ class LLMService:
 
         """
 
-        response = requests.post(
-            self.url,
-            headers={"Authorization": f"Bearer {self.api_key}","Content-Type": "application/json"},
-            json={"model": "gpt-4.1-mini","messages": [{"role": "user", "content": prompt}]}
-        )
+        try:
+        
+            response = requests.post(
+                self.url,
+                headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
+                json={"model": "gpt-4.1-mini", "messages": [{"role": "user", "content": prompt}]},
+                timeout=30
+            )
+            response.raise_for_status()
+            data = response.json()
+            if "choices" not in data:raise Exception(f"Ошибка API: {data}")
 
-        data = response.json()
+            return data["choices"][0]["message"]["content"]
 
-        if "choices" not in data:
-            raise Exception(f"Ошибка API: {data}")
+        except Exception as e:
+        
+            print(f"LLM ERROR: {e}")
 
-        return data["choices"][0]["message"]["content"]
+            return """
+        ⚠️ **В данный момент AI-рекомендация недоступна.**
+
+        Возможные причины:
+        - отсутствует подключение к интернету;
+        - временно недоступен AI-сервис;
+        - возникла ошибка авторизации API.
+
+        Попробуйте выполнить анализ позже.
+        """
 
 
